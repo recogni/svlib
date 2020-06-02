@@ -181,9 +181,14 @@
       cfgNodeScalar MEMBER``__n;                                    \
       cfgScalarInt  MEMBER``__s;                                    \
       if ($cast(MEMBER``__n, dom.childByName(`"MEMBER`")))          \
-        if (MEMBER``__n != null)                                    \
-          if ($cast(MEMBER``__s, MEMBER``__n.value))                \
-            MEMBER = MEMBER``__s.get();                             \
+        if (MEMBER``__n != null) begin                              \
+          string str = MEMBER``__n.sformat();                       \
+          int neg = (str.substr(0,0) == "-");                       \
+          if(neg)                                                   \
+            str = str.substr(1, str.len()-1);                       \
+          $cast(MEMBER``__s, cfgScalarInt::create(str.atoi()));     \
+          MEMBER = (neg)?(-1*MEMBER``__s.get()):MEMBER``__s.get();  \
+        end                                                         \
     end                                                             \
   endcase
 //-------------------------------------------------------------------

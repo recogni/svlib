@@ -436,7 +436,7 @@ class cfgFileINI extends cfgFile;
   endfunction: serialize
 
 
-  function cfgNode deserialize(int options=0);
+  function cfgNodeMap deserialize(int options=0);
 
     cfgNodeMap      root;
     cfgNodeMap      section;
@@ -481,6 +481,9 @@ class cfgFileINI extends cfgFile;
       else if (reKeyVal.test(strLine)) begin
         if (reKeyVal.getMatchStart(3) >=0) begin
           value = reKeyVal.getMatchString(3);
+          //check if hex representation and convert to decimal string
+          if(value.substr(0,1) == "0x")
+            value.itoa(value.substr(2, value.len()-1).atohex());
         end
         else begin
           value = reKeyVal.getMatchString(5);
