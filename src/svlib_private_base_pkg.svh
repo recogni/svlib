@@ -151,7 +151,7 @@ package svlib_private_base_pkg;
   //
   class svlibErrorManager extends svlibBase;
 
-    `ifdef INCA
+    `ifdef XCELIUM
       typedef string INDEX_T;
       protected function INDEX_T indexFromProcess(process p);
         return $sformatf("%p", p);
